@@ -1,0 +1,117 @@
+#view-home{ padding-top:28px; }
+
+.home-card{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px;
+  margin-bottom:16px;
+}
+
+.home-logo{
+  width:52px; height:52px;
+  border-radius:14px;
+  background:var(--primary-light);
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.home-logo img{ width:100%; height:100%; object-fit:cover; }
+
+.home-title{
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.5px;
+}
+
+.home-card .home-title{ color:var(--muted); }
+
+.home-subtitle{
+  font-size:16px;
+  font-weight:700;
+  color:var(--text);
+}
+
+.home-date{
+  font-size:12.5px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.home-quick-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.home-quick-item{
+  background:var(--card);
+  border:none;
+  border-radius:var(--radius);
+  padding:16px 10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+  box-shadow:0 8px 24px rgba(15,23,42,0.06);
+}
+
+.home-quick-icon{
+  width:42px; height:42px;
+  border-radius:12px;
+  background:var(--primary-light);
+  color:var(--primary);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px;
+}
+
+.home-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.summary-card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:16px;
+  box-shadow:0 8px 24px rgba(15,23,42,0.06);
+}
+
+.summary-card .label{
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+
+.summary-card .value{
+  font-size:18px;
+  font-weight:700;
+  color:var(--text);
+}
+
+.home-empty-card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:32px 20px;
+  text-align:center;
+  color:var(--muted);
+  box-shadow:0 8px 24px rgba(15,23,42,0.06);
+}
+
+.home-empty-card i{
+  font-size:28px;
+  color:var(--primary);
+  margin-bottom:10px;
+  display:block;
+}
+
+.home-empty-card p{
+  font-size:13.5px;
+}

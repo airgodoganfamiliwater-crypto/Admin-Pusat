@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#2563eb">
+<title>Famili Water - Admin Cabang</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="laporan.css">
+<link rel="stylesheet" href="profil.css">
+<link rel="stylesheet" href="statement.css">
+</head>
+<body>
+
+<!-- ================= MAIN CONTENT ================= -->
+<main id="app">
+
+  <!-- ============ VIEW: HOME ============ -->
+  <section id="view-home" class="view">
+    <div class="home-header"></div>
+
+    <div class="home-card">
+      <div class="home-logo">
+        <img src="logo.png" alt="Logo Famili Water" onerror="this.style.display='none'">
+      </div>
+      <div>
+        <div class="home-title">FAMILI WATER</div>
+        <div class="home-subtitle" id="greeting">-</div>
+        <div class="home-date" id="todayDate">-</div>
+      </div>
+    </div>
+
+    <div class="home-quick-grid">
+      <button class="home-quick-item" data-goto="laporan">
+        <div class="home-quick-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+        <span>Laporan</span>
+      </button>
+      <button class="home-quick-item" data-goto="statement">
+        <div class="home-quick-icon"><i class="fa-solid fa-file-invoice"></i></div>
+        <span>Statement</span>
+      </button>
+    </div>
+
+    <div class="home-summary">
+      <div class="summary-card">
+        <div class="label">Closing Hari Ini</div>
+        <div class="value" id="sumClosingHariIni">0</div>
+      </div>
+      <div class="summary-card">
+        <div class="label">Omset Hari Ini</div>
+        <div class="value" id="sumOmsetHariIni">Rp 0</div>
+      </div>
+    </div>
+
+    <div class="home-empty-card">
+      <i class="fa-solid fa-chart-line"></i>
+      <p>Ringkasan performa akan tampil di sini</p>
+    </div>
+  </section>
+
+  <!-- ============ VIEW: LAPORAN ============ -->
+  <section id="view-laporan" class="view">
+    <div class="lp-header"></div>
+
+    <div class="lp-container">
+      <div class="lp-title-row">
+        <h2 class="lp-title">Laporan</h2>
+      </div>
+
+      <!-- TAB MENU -->
+      <div class="lp-tabs">
+        <div class="lp-tab active" data-tab="klien">Klien</div>
+        <div class="lp-tab" data-tab="sales">Sales</div>
+        <div class="lp-tab" data-tab="data">Data</div>
+      </div>
+
+      <div class="lp-toolbar">
+        <button class="lp-filter-btn" id="lpFilterBtn" type="button">
+          <i class="fa-solid fa-calendar-days"></i>
+          <span id="lpFilterText">Bulan Ini</span>
+        </button>
+        <button class="lp-add-btn" id="lpAddBtn" type="button">
+          <i class="fa-solid fa-plus"></i> Input Baru
+        </button>
+      </div>
+
+      <!-- ================= TAB KLIEN ================= -->
+      <div id="lp-tab-klien" class="lp-tab-content active">
+        <div id="lpSummaryKlien"></div>
+
+        <!-- muncul kalau lagi mode pilih (long-press) -->
+        <div class="lp-select-bar" id="lpSelectBar">
+          <button class="lp-select-cancel" id="lpSelectCancelBtn" type="button">
+            <i class="fa-solid fa-xmark"></i> Batal
+          </button>
+          <span id="lpSelectCount">0 dipilih</span>
+          <button class="lp-select-delete" id="lpSelectDeleteBtn" type="button">
+            <i class="fa-solid fa-trash"></i> Hapus
+          </button>
+        </div>
+
+        <div id="lpListKlien" class="lp-list"></div>
+      </div>
+
+      <!-- ================= TAB SALES ================= -->
+      <div id="lp-tab-sales" class="lp-tab-content">
+        <div id="lpSummarySales"></div>
+        <div id="lpListSales" class="lp-list"></div>
+      </div>
+
+      <!-- ================= TAB DATA ================= -->
+      <div id="lp-tab-data" class="lp-tab-content">
+        <div id="lpListData" class="lp-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VIEW: PROFIL ============ -->
+  <section id="view-profil" class="view">
+    <div class="pr-header"></div>
+
+    <div class="pr-container">
+      <div class="pr-card">
+        <div class="pr-avatar">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+        <h3 id="prNama">Admin Cabang</h3>
+        <p class="pr-role" id="prRole">Admin Cabang</p>
+      </div>
+
+      <div class="pr-block">
+        <h4>Detail Akun</h4>
+        <div class="pr-row">
+          <span>Nama</span>
+          <span id="prDetailNama">-</span>
+        </div>
+        <div class="pr-row">
+          <span>ID Admin</span>
+          <span id="prDetailId">-</span>
+        </div>
+        <div class="pr-row">
+          <span>Status</span>
+          <span id="prDetailStatus">-</span>
+        </div>
+        <div class="pr-row">
+          <span>Email</span>
+          <span id="prDetailEmail">-</span>
+        </div>
+      </div>
+
+      <button id="btnLogout" class="btn-logout">
+        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ VIEW: STATEMENT ============ -->
+  <section id="view-statement" class="view">
+    <div class="st-header"></div>
+
+    <div class="st-container">
+      <div class="st-title-row">
+        <h2 class="st-title">Statement</h2>
+      </div>
+
+      <!-- TAB MENU -->
+      <div class="st-tabs">
+        <div class="st-tab active" data-tab="statement">Statement</div>
+        <div class="st-tab" data-tab="roi">ROI</div>
+        <div class="st-tab" data-tab="ekuitas">Ekuitas</div>
+      </div>
+
+      <!-- ================= TAB STATEMENT ================= -->
+      <div id="st-tab-statement" class="st-tab-content active">
+        <div class="lp-toolbar">
+          <button class="lp-filter-btn" id="stmFilterBtn" type="button">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span id="stmFilterText">Bulan Ini</span>
+          </button>
+        </div>
+
+        <!-- ================= CARD INPUT STATEMENT ================= -->
+        <div class="stm-input-card" id="stmInputCard">
+          <div class="stm-input-head">
+            <h3 id="stmInputTitle">Input Statement</h3>
+            <button class="sheet-close" id="stmInputCloseBtn" type="button">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <label class="lp-form-label">Periode (Bulan & Tahun)</label>
+          <div class="lp-form-row stm-periode-row">
+            <select id="stmInputBulan" class="lp-popup-select">
+              <option value="">Pilih Bulan</option>
+              <option>Januari</option>
+              <option>Februari</option>
+              <option>Maret</option>
+              <option>April</option>
+              <option>Mei</option>
+              <option>Juni</option>
+              <option>Juli</option>
+              <option>Agustus</option>
+              <option>September</option>
+              <option>Oktober</option>
+              <option>November</option>
+              <option>Desember</option>
+            </select>
+            <input type="number" id="stmInputTahun" class="lp-popup-select" placeholder="Tahun">
+          </div>
+
+          <div class="stm-preview" id="stmPreview">
+            <p class="st-small">Pilih bulan & tahun buat lihat data</p>
+          </div>
+
+          <label class="lp-form-label">Kas</label>
+          <div class="lp-form-row">
+            <input inputmode="numeric" id="stmKas" placeholder="Rp">
+          </div>
+
+          <label class="lp-form-label">Reinvestasi</label>
+          <div class="lp-form-row">
+            <input inputmode="numeric" id="stmReinvestasi" placeholder="Rp">
+          </div>
+
+          <button class="lp-btn-submit" id="stmSaveBtn" type="button">
+            <i class="fa-solid fa-check"></i> Simpan
+          </button>
+        </div>
+
+        <div class="st-list" id="stList"></div>
+      </div>
+
+      <!-- ================= TAB ROI ================= -->
+      <div id="st-tab-roi" class="st-tab-content">
+
+        <!-- ROI: LIST INVESTOR -->
+        <div id="roiListPage">
+          <div id="roiInvestorList" class="st-list"></div>
+        </div>
+
+        <!-- ROI: DETAIL INVESTOR -->
+        <div id="roiDetailPage" style="display:none;">
+          <button class="roi-back-btn" id="roiBackBtn" type="button">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke daftar investor
+          </button>
+
+          <div class="st-eq-item" id="roiInvestorSummary"></div>
+
+          <!-- CARD INPUT RETURN -->
+          <div class="stm-input-card" id="roiInputCard">
+            <div class="stm-input-head">
+              <h3 id="roiInputTitle">Input Return</h3>
+              <button class="sheet-close" id="roiInputResetBtn" type="button">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <label class="lp-form-label">Tanggal</label>
+            <div class="lp-date-box" id="roiDateBox">
+              <input type="date" id="roiTanggal">
+              <span class="lp-date-icon"><i class="fa-solid fa-calendar-days"></i></span>
+              <span class="lp-date-placeholder">Pilih tanggal dulu</span>
+            </div>
+
+            <label class="lp-form-label">Nominal Return</label>
+            <div class="lp-form-row">
+              <input inputmode="numeric" id="roiReturn" placeholder="Rp">
+            </div>
+
+            <button class="lp-btn-submit" id="roiSaveBtn" type="button">
+              <i class="fa-solid fa-check"></i> Simpan
+            </button>
+          </div>
+
+          <h4 class="lp-form-subtitle">Riwayat Return</h4>
+          <div id="roiHistoryList" class="st-list"></div>
+        </div>
+
+      </div>
+
+      <!-- ================= TAB EKUITAS ================= -->
+      <div id="st-tab-ekuitas" class="st-tab-content">
+        <div class="lp-toolbar">
+          <button class="lp-add-btn" id="eqAddBtn" type="button" style="flex:1;">
+            <i class="fa-solid fa-user-plus"></i> Tambah Investor
+          </button>
+        </div>
+        <div id="stEkuitasList" class="st-list"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<!-- ================= POPUP FILTER PERIODE (STATEMENT) ================= -->
+<div class="lp-popup" id="stmFilterPopup">
+  <div class="lp-popup-box">
+    <h3>Filter Periode</h3>
+
+    <label class="lp-popup-label">Bulan</label>
+    <div class="stm-picker-list" id="stmPickerBulan">
+      <div class="stm-picker-item" data-value="">Semua</div>
+      <div class="stm-picker-item" data-value="Januari">Jan</div>
+      <div class="stm-picker-item" data-value="Februari">Feb</div>
+      <div class="stm-picker-item" data-value="Maret">Mar</div>
+      <div class="stm-picker-item" data-value="April">Apr</div>
+      <div class="stm-picker-item" data-value="Mei">Mei</div>
+      <div class="stm-picker-item" data-value="Juni">Jun</div>
+      <div class="stm-picker-item" data-value="Juli">Jul</div>
+      <div class="stm-picker-item" data-value="Agustus">Agu</div>
+      <div class="stm-picker-item" data-value="September">Sep</div>
+      <div class="stm-picker-item" data-value="Oktober">Okt</div>
+      <div class="stm-picker-item" data-value="November">Nov</div>
+      <div class="stm-picker-item" data-value="Desember">Des</div>
+    </div>
+
+    <label class="lp-popup-label">Tahun</label>
+    <div class="stm-picker-list" id="stmPickerTahun"></div>
+
+    <div class="lp-popup-actions">
+      <button id="stmFilterResetBtn" class="lp-popup-btn lp-popup-btn-secondary" type="button">Reset</button>
+      <button id="stmFilterApplyBtn" class="lp-popup-btn lp-popup-btn-primary" type="button">Terapkan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODAL KONFIRMASI HAPUS ROI ================= -->
+<div class="confirm-modal" id="roiDeleteConfirmModal">
+  <div class="confirm-box">
+    <div class="confirm-icon"><i class="fa-solid fa-trash"></i></div>
+    <div class="confirm-title">Hapus Return?</div>
+    <div class="confirm-text">Data return periode ini akan dihapus, total return & portofolio investor otomatis dihitung ulang.</div>
+    <div class="confirm-actions">
+      <button id="roiDeleteCancelBtn" class="confirm-btn confirm-btn-secondary" type="button">Batal</button>
+      <button id="roiDeleteOkBtn" class="confirm-btn confirm-btn-primary" type="button">Ya, Hapus</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODAL KONFIRMASI HAPUS LAPORAN (KLIEN) ================= -->
+<div class="confirm-modal" id="lpDeleteConfirmModal">
+  <div class="confirm-box">
+    <div class="confirm-icon"><i class="fa-solid fa-trash"></i></div>
+    <div class="confirm-title">Hapus Laporan?</div>
+    <div class="confirm-text" id="lpDeleteConfirmText">Data laporan yang dipilih akan dihapus permanen.</div>
+    <div class="confirm-actions">
+      <button id="lpDeleteCancelBtn" class="confirm-btn confirm-btn-secondary" type="button">Batal</button>
+      <button id="lpDeleteOkBtn" class="confirm-btn confirm-btn-primary" type="button">Ya, Hapus</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODAL KONFIRMASI HAPUS STATEMENT ================= -->
+<div class="confirm-modal" id="stmDeleteConfirmModal">
+  <div class="confirm-box">
+    <div class="confirm-icon"><i class="fa-solid fa-trash"></i></div>
+    <div class="confirm-title">Hapus Statement?</div>
+    <div class="confirm-text">Data statement periode ini akan dihapus permanen.</div>
+    <div class="confirm-actions">
+      <button id="stmDeleteCancelBtn" class="confirm-btn confirm-btn-secondary" type="button">Batal</button>
+      <button id="stmDeleteOkBtn" class="confirm-btn confirm-btn-primary" type="button">Ya, Hapus</button>
+    </div>
+  </div>
+</div>
+<!-- ================= BOTTOM NAV ================= -->
+<nav class="bottom-nav">
+  <button class="nav-btn" data-view="home">
+    <i class="fa-solid fa-house nav-icon"></i>
+    <span class="nav-label">Home</span>
+  </button>
+  <button class="nav-btn" data-view="laporan">
+    <i class="fa-solid fa-clipboard-list nav-icon"></i>
+    <span class="nav-label">Laporan</span>
+  </button>
+  <button class="nav-btn" data-view="statement">
+    <i class="fa-solid fa-file-invoice nav-icon"></i>
+    <span class="nav-label">Statement</span>
+  </button>
+  <button class="nav-btn" data-view="profil">
+    <i class="fa-solid fa-user nav-icon"></i>
+    <span class="nav-label">Profil</span>
+  </button>
+</nav>
+
+<!-- ================= MODAL KONFIRMASI LOGOUT ================= -->
+<div class="confirm-modal" id="logoutConfirmModal">
+  <div class="confirm-box">
+    <div class="confirm-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
+    <div class="confirm-title">Keluar Akun?</div>
+    <div class="confirm-text">Kamu perlu login lagi buat masuk ke akun ini.</div>
+    <div class="confirm-actions">
+      <button id="logoutCancelBtn" class="confirm-btn confirm-btn-secondary" type="button">Batal</button>
+      <button id="logoutOkBtn" class="confirm-btn confirm-btn-primary" type="button">Ya, Keluar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= POPUP UMUM (info/error) ================= -->
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <p id="popupText">-</p>
+    <button id="popupCloseBtn" type="button">Oke</button>
+  </div>
+</div>
+
+<!-- ================= POPUP FILTER PERIODE (LAPORAN) ================= -->
+<div class="lp-popup" id="lpFilterPopup">
+  <div class="lp-popup-box">
+    <h3>Pilih Periode</h3>
+
+    <label class="lp-popup-label">Bulan</label>
+    <select id="lpFilterBulan" class="lp-popup-select">
+      <option value="0">Januari</option>
+      <option value="1">Februari</option>
+      <option value="2">Maret</option>
+      <option value="3">April</option>
+      <option value="4">Mei</option>
+      <option value="5">Juni</option>
+      <option value="6">Juli</option>
+      <option value="7">Agustus</option>
+      <option value="8">September</option>
+      <option value="9">Oktober</option>
+      <option value="10">November</option>
+      <option value="11">Desember</option>
+    </select>
+
+    <label class="lp-popup-label">Tahun</label>
+    <select id="lpFilterTahun" class="lp-popup-select"></select>
+
+    <div class="lp-popup-actions">
+      <button id="lpFilterCancelBtn" class="lp-popup-btn lp-popup-btn-secondary" type="button">Batal</button>
+      <button id="lpFilterApplyBtn" class="lp-popup-btn lp-popup-btn-primary" type="button">Terapkan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= POPUP VALIDASI (LAPORAN) ================= -->
+<div class="lp-popup" id="lpValidasiPopup">
+  <div class="lp-popup-box">
+    <h3>Input Validasi</h3>
+
+    <input id="lpInputValidasi" class="lp-popup-input" inputmode="numeric" placeholder="Masukkan nominal">
+
+    <div class="lp-popup-actions">
+      <button id="lpValidasiCancelBtn" class="lp-popup-btn lp-popup-btn-secondary" type="button">Batal</button>
+      <button id="lpValidasiSaveBtn" class="lp-popup-btn lp-popup-btn-primary" type="button">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= BOTTOM SHEET: INPUT LAPORAN ================= -->
+<div class="sheet-overlay" id="lpInputOverlay">
+  <div class="sheet" id="lpInputSheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <h3 id="lpInputTitle">Input Laporan</h3>
+      <button class="sheet-close" id="lpInputCloseBtn" type="button">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="sheet-body">
+
+      <div class="lp-date-box" id="lpDateBox">
+        <input type="date" id="lpTanggal">
+        <span class="lp-date-icon"><i class="fa-solid fa-calendar-days"></i></span>
+        <span class="lp-date-placeholder">Pilih tanggal dulu</span>
+      </div>
+
+      <label class="lp-form-label">Jumlah Klien</label>
+      <div class="lp-form-row">
+        <input inputmode="numeric" id="lpKlien" placeholder="Jumlah">
+        <input id="lpPayKlien" readonly placeholder="Otomatis (Rp)">
+      </div>
+
+      <label class="lp-form-label">Jumlah Sales</label>
+      <div class="lp-form-row">
+        <input inputmode="numeric" id="lpSales" placeholder="Jumlah">
+        <input inputmode="numeric" id="lpPaySales" placeholder="Isi manual (Rp)">
+      </div>
+
+      <h4 class="lp-form-subtitle">Pengeluaran</h4>
+
+      <div class="lp-exp-row lp-exp-gas">
+        <span><i class="fa-solid fa-fire"></i> Gas</span>
+        <input inputmode="numeric" id="lpGasHarga" placeholder="Rp">
+      </div>
+
+      <div class="lp-exp-row lp-exp-tutup">
+        <span><i class="fa-solid fa-box"></i> Tutup</span>
+        <input inputmode="numeric" id="lpTutupHarga" placeholder="Rp">
+      </div>
+
+      <div class="lp-exp-row lp-exp-bensin">
+        <span><i class="fa-solid fa-gas-pump"></i> Bensin</span>
+        <input inputmode="numeric" id="lpBensinHarga" placeholder="Rp">
+      </div>
+
+      <div class="lp-exp-row lp-exp-listrik">
+        <span><i class="fa-solid fa-bolt"></i> Listrik</span>
+        <input inputmode="numeric" id="lpListrik" placeholder="Rp">
+      </div>
+
+      <div id="lpLainnyaBox"></div>
+      <button class="lp-btn-add" id="lpTambahLainnyaBtn" type="button">
+        <i class="fa-solid fa-plus"></i> Tambah Pengeluaran Lain
+      </button>
+
+      <h4 class="lp-form-subtitle">Total Uang</h4>
+      <input id="lpTotalProfit" readonly placeholder="Hasil otomatis">
+
+      <button class="lp-btn-submit" id="lpKirimBtn" type="button">
+        <i class="fa-solid fa-check"></i> Kirim
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= BOTTOM SHEET: INVESTOR (TAMBAH/EDIT) ================= -->
+<div class="sheet-overlay" id="eqSheetOverlay">
+  <div class="sheet" id="eqSheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <h3 id="eqSheetTitle">Tambah Investor</h3>
+      <button class="sheet-close" id="eqCloseBtn" type="button">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="sheet-body">
+
+      <label class="lp-form-label">Nama</label>
+      <div class="lp-form-row">
+        <input id="eqNama" placeholder="Nama investor">
+      </div>
+
+      <label class="lp-form-label">Email</label>
+      <div class="lp-form-row">
+        <input id="eqEmail" type="email" placeholder="Email investor">
+      </div>
+
+      <div id="eqPasswordGroup">
+        <label class="lp-form-label">Password</label>
+        <div class="lp-form-row">
+          <input id="eqPassword" type="password" placeholder="Minimal 6 karakter">
+        </div>
+      </div>
+
+      <label class="lp-form-label">Jumlah Investasi (Rp)</label>
+      <div class="lp-form-row">
+        <input inputmode="numeric" id="eqInvestasi" placeholder="0">
+      </div>
+
+      <label class="lp-form-label">Portofolio (Rp)</label>
+      <div class="lp-form-row">
+        <input inputmode="numeric" id="eqPortofolio" placeholder="0">
+      </div>
+
+      <label class="lp-form-label">Return (Rp)</label>
+      <div class="lp-form-row">
+        <input inputmode="numeric" id="eqReturn" placeholder="0">
+      </div>
+
+      <label class="lp-form-label">Ekuitas (%)</label>
+      <div class="lp-form-row">
+        <input inputmode="decimal" id="eqAsset" placeholder="Contoh: 40.6">
+      </div>
+
+      <h4 class="lp-form-subtitle">Rekening</h4>
+      <div class="lp-form-row">
+        <input id="eqBank" placeholder="Nama bank">
+        <input id="eqNorek" placeholder="Nomor rekening">
+      </div>
+
+      <button class="lp-btn-submit" id="eqSaveBtn" type="button">
+        <i class="fa-solid fa-check"></i> Simpan
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+<script src="index.js"></script>
+<script src="home.js"></script>
+<script src="laporan.js"></script>
+<script src="profil.js"></script>
+<script src="statement.js"></script>
+
+<div id="devConsoleMount"></div>
+<script src="devconsole.js"></script>
+
+</body>
+</html>
