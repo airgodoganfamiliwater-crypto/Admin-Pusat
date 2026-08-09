@@ -206,6 +206,8 @@ async function lpLoadDataKlien(uid){
     const omset = lpToNumber(d.pembagianKlien);
     const klien = lpToNumber(d.klien);
     const pembayaran = lpToNumber(d.pembayaranKlien);
+    const gajiKokiRate = Number((window.currentAdminData || {}).gajiKoki) || 0;
+    const upahKoki = (klien || 0) * gajiKokiRate;
 
     totalMargin += marginKlien;
     totalKlien += klien;
@@ -237,6 +239,7 @@ async function lpLoadDataKlien(uid){
         ${lpRenderExpDetail(p)}
       </div>
 
+      <div class="lp-line"><span>Upah Koki</span><b>${rupiah(upahKoki)}</b></div>
       <div class="lp-line"><span>Margin</span><b>${rupiah(marginKlien)}</b></div>
       <div class="lp-line"><span>Validasi</span><b class="lp-validasi-value">${rupiah(validasi)}</b></div>
       <div class="lp-profit ${omset >= 0 ? "plus" : "minus"}">Omset: ${rupiah(omset)}</div>
